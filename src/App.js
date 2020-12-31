@@ -1,7 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import Footer from './Footer'
 import Header from "./Header";
+import Editor from "./Editor";
 
 function App() {
     return (
@@ -15,7 +15,7 @@ function App() {
                 </tr>
                 <tr>
                     <div className="Code">
-                        <textarea rows={30} cols={80}></textarea>
+                        <Editor />
                     </div>
                 </tr>
                 <tr>

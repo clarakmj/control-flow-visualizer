@@ -8,6 +8,13 @@ function Editor() {
         <AceEditor
             mode="c_cpp"
             theme="monokai"
+            setOptions={
+                {
+                    enableBasicAutocompletion: true,
+                    enableLiveAutocompletion: true,
+                    tabSize: 2
+                }
+            }
         />
     )
 }

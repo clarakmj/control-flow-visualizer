@@ -1,11 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
+import Editor from "./Editor";
+import Header from "./Header";
+import Footer from "./Footer";
+
+const editor = <Editor />
 
 function App() {
     return (
         <div className="App">
             <header className="App-header">
-                <h1>Control Flow Visualizer</h1>
+                <Header />
             </header>
             <body>
             <table class="center">
@@ -15,7 +20,7 @@ function App() {
                 </tr>
                 <tr>
                     <td><div className="Code">
-                        <textarea rows={30} cols={80}></textarea>
+                        {editor}
                     </div></td>
                     <td><img src="https://media.geeksforgeeks.org/wp-content/uploads/20190515152609/666.jpg"
                              name="placeholder" height="500" width="400"/></td>
@@ -30,7 +35,7 @@ function App() {
                 </tr>
             </table>
             </body>
-            <footer>©2020 Tiger Z & Clara K</footer>
+            <Footer />
         </div>
     );
 }

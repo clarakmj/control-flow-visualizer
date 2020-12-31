@@ -36,7 +36,14 @@ body {
   justify-content: left;
 }
 
-footer, th {
+.Console {
+  background-color: white;
+  font-family: "JetBrains Mono";
+  color: #282c34;
+  padding: 15px;
+}
+
+footer, th, td {
   color: white;
 }
 

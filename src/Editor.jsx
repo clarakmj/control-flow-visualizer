@@ -2,9 +2,11 @@ import React from 'react';
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/theme-monokai";
+import diamondTest from "./images/diamondtest.jpg"
 
 const keywords = ["if", "else", "while", "for", "return", "true", "false"]
 const splitter = new RegExp("\s+|\(|\)|[;]") //TODO: make correct RegExp (current one doesn't work)
+let cfDiagram = <img src={diamondTest} alt="testing"/>;
 
 class Editor extends React.Component {
     /***
@@ -16,6 +18,7 @@ class Editor extends React.Component {
         super(props);
         this.state = {
             content: null,
+            words: null
         };
         this.onChange = this.onChange.bind(this);
     }
@@ -28,16 +31,22 @@ class Editor extends React.Component {
     onChange(newValue) {
         this.setState({content: newValue});
         let content = newValue.toString().split(" "); //TODO: replace with splitter
+        let important = [];
         for (let i = 0; i < content.length; i++) {
             if (keywords.includes(content[i])) {
-                console.log(content[i]);
+                important.push(content[i]);
+                this.setState({words: important})
+                console.log(this.state.words);
             }
         }
     }
 
     //TODO: function to take array of strings to convert to an image
     visualize(content) {
-        return 0;
+        const diagram = content.map(() =>
+            <img src={diamondTest}/>
+            );
+        cfDiagram = <div>{diagram}</div>;
     }
 
     run() {
@@ -47,22 +56,25 @@ class Editor extends React.Component {
     render() {
         return (
             <div>
-                <AceEditor
-                    mode="c_cpp"
-                    theme="monokai"
-                    onChange={this.onChange}
-                    content={this.state.content}
-                    setOptions={
-                        {
-                            enableBasicAutocompletion: true,
-                            enableLiveAutocompletion: true,
-                            tabSize: 2
+                <table class="center">
+                    <AceEditor
+                        mode="c_cpp"
+                        theme="monokai"
+                        onChange={this.onChange}
+                        content={this.state.content}
+                        setOptions={
+                            {
+                                enableBasicAutocompletion: true,
+                                enableLiveAutocompletion: true,
+                                tabSize: 2
+                            }
                         }
-                    }
-                />
+                    />
+                    {/*cfDiagram*/}
+                </table>
                 <button
                     className="run"
-                    onClick={ () => this.run()}
+                    onClick={ () => this.visualize(this.state.words)}
                     >
                     Run
                 </button>

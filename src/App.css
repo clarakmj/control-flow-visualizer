@@ -15,12 +15,35 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 1vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: baseline;
+  justify-content: left;
+  font-family: "Andale Mono";
   font-size: calc(10px + 2vmin);
+  color: white;
+  padding-left: 25px;
+}
+
+body {
+  background-color: #282c34;
+  min-height: 81vh;
+}
+
+.Code {
+  align-items: baseline;
+  justify-content: left;
+}
+
+.Console {
+  background-color: white;
+  font-family: "JetBrains Mono";
+  color: #282c34;
+  padding: 15px;
+}
+
+footer, th, td {
   color: white;
 }
 

@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import FlowChart from "./FlowChart"
 
 const editor = <Editor />
+let code = [];
 
 function App() {
     return (
@@ -19,9 +20,9 @@ function App() {
                     <td><strong>Visual</strong></td>
                 </tr>
                 <tr>
-                    <td><div className="Code">
-                        {editor}
-                    </div></td>
+                    <td>
+                        <Editor />
+                    </td>
                     <td>
                         <FlowChart />
                     </td>

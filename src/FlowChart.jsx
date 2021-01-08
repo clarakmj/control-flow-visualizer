@@ -14,6 +14,10 @@ class FlowChart extends React.Component {
         code = props;
     }
 
+    handleChange(e) {
+        this.props.onChange
+    }
+
     newNode(id_, type_, data_, x_, y_) {
         return {
             id: id_,
@@ -25,7 +29,7 @@ class FlowChart extends React.Component {
         }
     }
 
-    newEdge(id_, ) {
+    newEdge(id_, source_, target_, label_) {
         return {
             id: id_,
             source: source_,

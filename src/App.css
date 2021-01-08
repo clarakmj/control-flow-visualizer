@@ -43,6 +43,11 @@ body {
   padding: 15px;
 }
 
+.main {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 footer, th, td {
   color: white;
 }

@@ -14,7 +14,7 @@ function App() {
                 <Header />
             </header>
             <body>
-            <table class="center">
+            <table class="center" className="main">
                 <tr>
                     <td><strong>Code</strong></td>
                     <td><strong>Visual</strong></td>

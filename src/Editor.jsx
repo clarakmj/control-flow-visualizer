@@ -23,6 +23,9 @@ function Editor(props) {
             mode="c_cpp"
             theme="monokai"
             onChange={onChange}
+            placeholder="Please input your code here."
+            height="720px"
+            width="520px"
             setOptions={
                 {
                     enableBasicAutocompletion: true,

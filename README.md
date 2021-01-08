@@ -1,3 +1,19 @@
+# Control-Flow-Visualizer
+
+Control Flow Visualizer is a tool designed to help users visualize each line of code in a program. The aim is to help improve understanding of what the code is doing at each step, and to help debug programs.
+
+## Features
+
+* Users will be able to visualize data structures, such as arrays, linked lists, heaps, matrices, etc.
+* Users can step through every iteration of code alongside visualizations that display what the code is doing
+
+## Authors
+
+* Tiger Zhao
+* Clara Kim
+
+## Acknowledgements
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

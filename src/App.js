@@ -2,14 +2,11 @@ import './App.css';
 import Editor from "./Editor";
 import Header from "./Header";
 import Footer from "./Footer";
-import FlowChart from "./FlowChart"
+import FlowChart from "./FlowChart";
+import React, {useState} from 'react';
 
 function App() {
-    let code = "";
-
-    function updateCode(code_) {
-        code = code_;
-    }
+    const [code, updateCode] = useState("");
 
     return (
         <div className="App">

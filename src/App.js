@@ -4,10 +4,13 @@ import Header from "./Header";
 import Footer from "./Footer";
 import FlowChart from "./FlowChart"
 
-const editor = <Editor />
-let code = [];
-
 function App() {
+    let code = "";
+
+    function updateCode(code_) {
+        code = code_;
+    }
+
     return (
         <div className="App">
             <header className="App-header">
@@ -21,10 +24,14 @@ function App() {
                 </tr>
                 <tr>
                     <td>
-                        <Editor />
+                        <Editor
+                        updateCode={updateCode}
+                        />
                     </td>
                     <td>
-                        <FlowChart />
+                        <FlowChart
+                        text={code}
+                        />
                     </td>
                 </tr>
                 <tr>

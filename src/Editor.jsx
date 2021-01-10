@@ -4,7 +4,7 @@ import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/theme-monokai";
 import diamondTest from "./images/diamondtest.jpg"
 
-const keywords = ["if", "else", "while", "for", "return", "true", "false"]
+
 const splitter = new RegExp("\s+|\(|\)|[;]") //TODO: make correct RegExp (current one doesn't work)
 let cfDiagram = <img src={diamondTest} alt="testing"/>;
 

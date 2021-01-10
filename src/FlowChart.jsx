@@ -8,16 +8,43 @@ import ReactFlow from 'react-flow-renderer';
 //     { id: 'e1-2', source: '1', target: '2', animated: true }
 //     ];
 
+const keywords = ["if", "else", "while", "for", "return", "true", "false", "case", "switch", ""]
+const X_INIT = 10;
+const Y_INIT = 150;
+const VERT_SPACE = 55
+const HORI_SPACE = 100;
+const splitter = new RegExp("\s*[({*\s*\n+)|(}*\s*\n*)]");
+
 function FlowChart(props) {
     const [content, setContent] = useState([]);
 
     useEffect(() => {
-            console.log(content);
-            const elements = [newNode('1', 'input', props.text, 450, 5)];
+            const elements = parseCode(props.text);
             setContent(elements);
-        }, [props.text])
+            console.log(content);
+    }, [props.text])
 
-
+    function parseCode(code) {
+        code = code.split("");
+        const elements = [newNode('0', 'input', code[0].slice(0, -1), X_INIT, Y_INIT)];
+        let brackets = 0;
+        for (let i = 1; i < code.length - 1; i++) {
+            switch (code[i]) {
+                case "{": brackets++;
+                break;
+                case "}": brackets--;
+                break;
+                default:
+                    elements.push(newNode(String(i),
+                        'default',
+                        code[i],
+                        X_INIT + brackets * HORI_SPACE,
+                        Y_INIT + i * VERT_SPACE));
+                    elements.push(newEdge("e" + String(i), String(i - 1), String(i), ""));
+            }
+        }
+        return elements;
+    }
 
     function newNode(id_, type_, label_, x_, y_) {
         return {

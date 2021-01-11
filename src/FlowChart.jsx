@@ -26,34 +26,64 @@ function FlowChart(props) {
             console.log(content);
     }, [props.text])
 
+    function toNextBracket(code, index) {
+        let text = "";
+        while (code[index] != "{" && index < code.length) {
+            text += (" " + code[index]);
+            index++;
+        }
+        return [text, index];
+    }
+
     function parseCode(code) {
         code = code.split(/\s+/);
         let elements = [];
-        let index = 0;
-        let firstLine = "";
-        while (code[index] != "{" && index < code.length) {
-            firstLine += (" " + code[index]);
-            index++;
-        }
-        elements.push(newNode('0', 'input', firstLine, X_INIT, Y_INIT));
+        let [label, index] = toNextBracket(code, 0);
+        elements.push(newNode('0', 'input', label, X_INIT, Y_INIT));
         let id = 1;
         let brackets = -1;
+        let booleanIDs = [];
+        let edgeLabel = "";
         for (index; index < code.length - 1; index++) {
             switch (code[index]) {
-                case "{": brackets++;
-                break;
-                case "}": brackets--;
-                break;
+                case "{":
+                    brackets++;
+                    break;
+                case "}":
+                    brackets--;
+                    break;
+                case "if":
+                    [label, index] = toNextBracket(code, index);
+                    elements.push(newNode(String(id),
+                        'default',
+                        label,
+                        X_INIT + brackets * HORI_SPACE,
+                        Y_INIT + id * VERT_SPACE));
+                    brackets++;
+                    booleanIDs.push(id);
+                    elements.push(newEdge("e" + String(id), String(id - 1), String(id), edgeLabel));
+                    edgeLabel = "T";
+                    id++;
+                    break;
                 default:
-                    let label = code[index];
+                    label = code[index];
                     elements.push(newNode(String(id),
                         'default',
                         label,
                         X_INIT + brackets * HORI_SPACE,
                         Y_INIT + id * VERT_SPACE));
                     console.log(label);
-                    elements.push(newEdge("e" + String(id), String(id - 1), String(id), ""));
+                    if (booleanIDs.length && code[index - 1] == "}") {
+                        let boolID = booleanIDs.pop();
+                        elements.push(newEdge("e" + String(boolID) + "f",
+                            String(boolID),
+                            String(id),
+                            "F"))
+                    }
+                    elements.push(newEdge("e" + String(id), String(id - 1), String(id), edgeLabel));
+                    edgeLabel = "";
                     id++;
+                    break;
             }
         }
         return elements;

@@ -50,7 +50,7 @@ function FlowChart(props) {
                         'default',
                         label,
                         X_INIT + brackets * HORI_SPACE,
-                        Y_INIT + index * VERT_SPACE));
+                        Y_INIT + id * VERT_SPACE));
                     console.log(label);
                     elements.push(newEdge("e" + String(id), String(id - 1), String(id), ""));
                     id++;

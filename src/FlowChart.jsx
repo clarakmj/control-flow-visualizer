@@ -12,8 +12,10 @@ const keywords = ["if", "else", "while", "for", "return", "true", "false", "case
 const X_INIT = 10;
 const Y_INIT = 150;
 const VERT_SPACE = 55
-const HORI_SPACE = 100;
-const splitter = new RegExp("\s*[({*\s*\n+)|(}*\s*\n*)]");
+const HORI_SPACE = 180;
+//const splitter = new RegExp("\s*[{}]?\n\s*}?\s*");
+const openBracket = new RegExp("\s*{\s*");
+const closeBracket = new RegExp("\s*}\s*");
 
 function FlowChart(props) {
     const [content, setContent] = useState([]);
@@ -25,22 +27,33 @@ function FlowChart(props) {
     }, [props.text])
 
     function parseCode(code) {
-        code = code.split("");
-        const elements = [newNode('0', 'input', code[0].slice(0, -1), X_INIT, Y_INIT)];
-        let brackets = 0;
-        for (let i = 1; i < code.length - 1; i++) {
-            switch (code[i]) {
+        code = code.split(/\s+/);
+        let elements = [];
+        let index = 0;
+        let firstLine = "";
+        while (code[index] != "{" && index < code.length) {
+            firstLine += (" " + code[index]);
+            index++;
+        }
+        elements.push(newNode('0', 'input', firstLine, X_INIT, Y_INIT));
+        let id = 1;
+        let brackets = -1;
+        for (index; index < code.length - 1; index++) {
+            switch (code[index]) {
                 case "{": brackets++;
                 break;
                 case "}": brackets--;
                 break;
                 default:
-                    elements.push(newNode(String(i),
+                    let label = code[index];
+                    elements.push(newNode(String(id),
                         'default',
-                        code[i],
+                        label,
                         X_INIT + brackets * HORI_SPACE,
-                        Y_INIT + i * VERT_SPACE));
-                    elements.push(newEdge("e" + String(i), String(i - 1), String(i), ""));
+                        Y_INIT + index * VERT_SPACE));
+                    console.log(label);
+                    elements.push(newEdge("e" + String(id), String(id - 1), String(id), ""));
+                    id++;
             }
         }
         return elements;

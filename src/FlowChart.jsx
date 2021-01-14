@@ -42,7 +42,7 @@ function FlowChart(props) {
         elements.push(newNode('0', 'input', label, X_INIT, Y_INIT));
         let id = 1;
         let brackets = -1;
-        let booleanIDs = [];
+        let booleans = []; //stores ID of boolean node and its indentation number
         let edgeLabel = "";
         for (index; index < code.length - 1; index++) {
             switch (code[index]) {
@@ -53,14 +53,28 @@ function FlowChart(props) {
                     brackets--;
                     break;
                 case "if":
+                    let ifIndex = index;
                     [label, index] = toNextBracket(code, index);
                     elements.push(newNode(String(id),
                         'default',
                         label,
                         X_INIT + brackets * HORI_SPACE,
                         Y_INIT + id * VERT_SPACE));
+                    if (code[ifIndex - 1] == "}") {
+                        while (booleans.length) {
+                            if (booleans[booleans.length - 1][1] >= brackets) {
+                                let boolID = booleans.pop()[0];
+                                elements.push(newEdge("e" + String(boolID) + "f",
+                                    String(boolID),
+                                    String(id),
+                                    "F"))
+                            } else {
+                                break;
+                            }
+                        }
+                    }
+                    booleans.push([id, brackets]);
                     brackets++;
-                    booleanIDs.push(id);
                     elements.push(newEdge("e" + String(id), String(id - 1), String(id), edgeLabel));
                     edgeLabel = "T";
                     id++;
@@ -73,12 +87,18 @@ function FlowChart(props) {
                         X_INIT + brackets * HORI_SPACE,
                         Y_INIT + id * VERT_SPACE));
                     console.log(label);
-                    if (booleanIDs.length && code[index - 1] == "}") {
-                        let boolID = booleanIDs.pop();
-                        elements.push(newEdge("e" + String(boolID) + "f",
-                            String(boolID),
-                            String(id),
-                            "F"))
+                    if (code[index - 1] == "}") {
+                        while (booleans.length) {
+                            if (booleans[booleans.length - 1][1] >= brackets) {
+                                let boolID = booleans.pop()[0];
+                                elements.push(newEdge("e" + String(boolID) + "f",
+                                    String(boolID),
+                                    String(id),
+                                    "F"))
+                            } else {
+                                break;
+                            }
+                        }
                     }
                     elements.push(newEdge("e" + String(id), String(id - 1), String(id), edgeLabel));
                     edgeLabel = "";

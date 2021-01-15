@@ -35,6 +35,21 @@ function FlowChart(props) {
         return [text, index];
     }
 
+    function connectBooleans(booleans, brackets, id, elements) {
+        while (booleans.length) {
+            if (booleans[booleans.length - 1][1] >= brackets) {
+                let boolID = booleans.pop()[0];
+                elements.push(newEdge("e" + String(boolID) + "f",
+                    String(boolID),
+                    String(id),
+                    "F"))
+            } else {
+                break;
+            }
+        }
+        return booleans;
+    }
+
     function parseCode(code) {
         code = code.split(/\s+/);
         let elements = [];
@@ -61,17 +76,7 @@ function FlowChart(props) {
                         X_INIT + brackets * HORI_SPACE,
                         Y_INIT + id * VERT_SPACE));
                     if (code[ifIndex - 1] == "}") {
-                        while (booleans.length) {
-                            if (booleans[booleans.length - 1][1] >= brackets) {
-                                let boolID = booleans.pop()[0];
-                                elements.push(newEdge("e" + String(boolID) + "f",
-                                    String(boolID),
-                                    String(id),
-                                    "F"))
-                            } else {
-                                break;
-                            }
-                        }
+                        booleans = connectBooleans(booleans, brackets, id, elements);
                     }
                     booleans.push([id, brackets]);
                     brackets++;
@@ -88,17 +93,7 @@ function FlowChart(props) {
                         Y_INIT + id * VERT_SPACE));
                     console.log(label);
                     if (code[index - 1] == "}") {
-                        while (booleans.length) {
-                            if (booleans[booleans.length - 1][1] >= brackets) {
-                                let boolID = booleans.pop()[0];
-                                elements.push(newEdge("e" + String(boolID) + "f",
-                                    String(boolID),
-                                    String(id),
-                                    "F"))
-                            } else {
-                                break;
-                            }
-                        }
+                        booleans = connectBooleans(booleans, brackets, id, elements)
                     }
                     elements.push(newEdge("e" + String(id), String(id - 1), String(id), edgeLabel));
                     edgeLabel = "";
